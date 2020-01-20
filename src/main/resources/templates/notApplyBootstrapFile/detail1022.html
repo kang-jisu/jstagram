@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Jstagram</title>
+</head>
+<body>
+<a th:href="'/update/'+${post.id}">수정</a>
+<a th:href="'/delete/'+${post.id}">삭제</a>
+<br>
+<table>
+    <tr>
+        <td th:rowspan="4"><img th:src="'/images/'+${post.image}" th:width="500px"/></td>
+    </tr>
+    <tr>
+        <td th:text="${author}"></td>
+    </tr>
+    <tr>
+        <td th:text="${post.content}"></td>
+        <td th:text="${#calendars.format(post.regDate,'YYYY년 MM월 dd일 ')}"></td>
+    </tr>
+    <tr>
+        <td>댓글</td>
+    </tr>
+</table>
+
+<table >
+    <form th:action="'/detail/comments/'+${post.id}" method="post">
+        <tr>
+            <td>작성자(번호)</td>
+            <td>댓글</td>
+        </tr>
+        <tr th:each="comment : ${comments.get(post.id)}">
+            <td th:text="${mapList.get(comment.author)}"></td>
+            <td th:text="${comment.comment}"></td>
+            <td th:text="${#calendars.format(comment.regDate,'YYYY년 MM월 dd일 ')}"></td>
+            <td><a th:href="'/detail/'+${post.id}+'/comments/delete/'+${comment.id}">삭제</a></td>
+        </tr>
+        <tr>
+            <td><input type="number" id="comment_user_id" name="author"></td>
+            <td><input type="hidden" id="comment_post_id" name="postId" th:value="${post.id}"></td>
+            <td><input type="text" id="comment_text" name="comment"></td>
+            <td><button type="submit" id="comment_insert">작성</button></td>
+        </tr>
+    </form>
+</table>
+
+<a href="/">뒤로가기</a>
+</body>
+</html>

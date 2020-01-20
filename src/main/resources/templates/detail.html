@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Jstagram</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    <link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
+
+</head>
+<body class="bg-light">
+
+<nav th:replace="layout/header::header"></nav>
+<div class="mt-5 pt-5 "> <!-- 본문-->
+
+    <div class="container">
+        <div class="row justify-content-center">
+
+
+            <div class="card mb-3 " style="width: 935px;">
+                <div class="row no-gutters">
+                    <div class="col-md-8">
+                        <img th:src="${post.image}" th:width="600px" class="card-img">
+                    </div>
+                    <div class="col-md-4" style="position: relative;">
+                        <div class="card-header bg-white ">
+                            <a class="text-body font-weight-bold text-monospace " style="height: 70px;"
+                               th:href="'/detail/'+${post.id}"
+                               th:text="${mapList.get(post.author)}"></a>
+                        </div>
+
+                        <div class="card-body border border-bottom border-gray overflow-auto" style="height: 420px;">
+                            <span style="font-size:90%" class="card-title font-weight-bold"
+                                  th:text="${mapList.get(post.author)}"></span>
+                            <span style="font-size:80%" class="card-text" th:text="${post.content}"></span><br/>
+
+                            <p class="mb-0" th:each="comment : ${comments.get(post.id)}">
+                        <span style="font-size:85%" class="card-title font-weight-bold"
+                              th:text="${mapList.get(comment.author)}"></span>
+                                <span style="font-size:75%" class="card-text" th:text="${comment.comment}"></span>
+                                <button type="button" class="close " aria-label="Close">
+                                    <a th:href="'/detail/'+${post.id}+'/comments/delete/'+${comment.id}"
+                                       aria-hidden="true" style="color:lightslategrey">&times;</a>
+                                </button>
+                                <br/>
+                                <span class="mb-0 text-muted" style="font-size:75%;"
+                                      th:text="${#calendars.format(comment.regDate,'MM월 dd일 ')}"></span>
+                            </p>
+                        </div>
+                        <div class="card-body"
+                             style="position: absolute; bottom: 63px;width:100%; padding-bottom: 0px;">
+                        <span>
+                            <i class="far fa-heart fa-2x"></i>
+                        </span>
+                            <a style="color:black"
+                               th:href="'/detail/'+${post.id}">
+                                <i class="far fa-comment fa-2x pl-2"></i>
+                            </a>
+                            <p><a th:href="'/detail/'+${post.id}" class="small mb-0 text-muted"
+                                  th:text="${#calendars.format(post.regDate,'MM월 dd일 ')}"></a>
+                            </p>
+                        </div>
+                        <form th:action="'/detail/comments/'+${post.id}" method="post"
+                              style="position:absolute; bottom:0px;">
+                            <div class="form-row card-footer w-auto m-0">
+                                <div class="col">
+                                    <input type="number" class="form-control" placeholder="작성자" id="comment_user_id"
+                                           name="author">
+                                </div>
+                                <input type="hidden" id="comment_post_id" name="postId" th:value="${post.id}">
+                                <div class="col-5">
+                                    <input type="text" class="form-control" id="comment_text" name="comment"
+                                           placeholder="댓글 달기">
+                                </div>
+                                <div class="col">
+                                    <button class="btn btn-outline-secondary" type="submit" id="comment_insert">작성
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+
+                <a class="btn btn-success btn-block " th:href="'/update/'+${post.id}"  style="width: 935px;">수정</a>
+
+                <a class="btn btn-info btn-block " th:href="'/delete/'+${post.id}"  style="width: 935px;">삭제</a>
+        </div>
+    </div>
+
+</div>
+
+<br/>
+<br/>
+
+</body>
+</html>
+
+
+<!-- 디자인없는코드<div class="container">-->
+
+<!--    <div class="row justify-content-center">-->
+<!--        <a th:href="'/update/'+${post.id}">수정</a>-->
+<!--        <a th:href="'/delete/'+${post.id}">삭제</a>-->
+<!--        <br>-->
+<!--        <table>-->
+<!--            <tr>-->
+<!--                <td th:rowspan="4"><img th:src="'/images/'+${post.image}" th:width="500px"/></td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td th:text="${author}"></td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td th:text="${post.content}"></td>-->
+<!--                <td th:text="${#calendars.format(post.regDate,'YYYY년 MM월 dd일 ')}"></td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td>댓글</td>-->
+<!--            </tr>-->
+<!--        </table>-->
+
+<!--        <table>-->
+<!--            <form th:action="'/detail/comments/'+${post.id}" method="post">-->
+<!--                <tr>-->
+<!--                    <td>작성자(번호)</td>-->
+<!--                    <td>댓글</td>-->
+<!--                </tr>-->
+<!--                <tr th:each="comment : ${comments.get(post.id)}">-->
+<!--                    <td th:text="${mapList.get(comment.author)}"></td>-->
+<!--                    <td th:text="${comment.comment}"></td>-->
+<!--                    <td th:text="${#calendars.format(comment.regDate,'YYYY년 MM월 dd일 ')}"></td>-->
+<!--                    <td><a th:href="'/detail/'+${post.id}+'/comments/delete/'+${comment.id}">삭제</a></td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <td><input type="number" id="comment_user_id" name="author"></td>-->
+<!--                    <td><input type="hidden" id="comment_post_id" name="postId" th:value="${post.id}"></td>-->
+<!--                    <td><input type="text" id="comment_text" name="comment"></td>-->
+<!--                    <td>-->
+<!--                        <button type="submit" id="comment_insert">작성</button>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--            </form>-->
+<!--        </table>-->
+
+<!--        <a href="/">뒤로가기</a>-->
+<!--    </div>-->
+<!--</div>-->

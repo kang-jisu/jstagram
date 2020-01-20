@@ -1,0 +1,21 @@
+
+spring:
+  jpa:
+    hibernate:
+      generate-ddl: true
+      ddl-auto: update
+    show-sql: true
+  servlet:
+    multipart:
+      max-file-size : 50MB
+      max-request-size: 50MB
+cloud:
+  aws:
+    stack:
+      auto: false
+    s3:
+      bucket: jstagram
+    region:
+      static: ap-northeast-2
+  credentials:
+    instanceProfile: true

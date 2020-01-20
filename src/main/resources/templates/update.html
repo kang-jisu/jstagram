@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Jstagram</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    <link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+
+</head>
+<body class="bg-light">
+
+<nav th:replace="layout/header::header"></nav>
+<div class="mt-5 pt-5 "> <!-- 본문-->
+    <div class="container">
+        <div style="text-align: center">수정하기</div>
+        <div class="row justify-content-center">
+
+            <form th:action="'/update/'+${post.id}" method="POST" enctype="multipart/form-data">
+                <table>
+                    <tr>
+                        <th>사진</th>
+                        <td><input id="post_image" name="file" type="file" placeholder="사진파일" th:value="${post.image}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>작성자</th>
+                        <td><input id="post_author" name="author" type="number" th:value="${post.author}"></td>
+                    </tr>
+                    <tr>
+                        <th>내용</th>
+                        <td><input id="post_content" name="content" type="textarea" th:value="${post.content}"></td>
+                    </tr>
+                </table>
+                <a href="/">목록으로</a>
+                <button type="submit" id="update">수정</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
