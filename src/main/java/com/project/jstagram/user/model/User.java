@@ -1,6 +1,8 @@
-package com.project.jstagram.model;
+package com.project.jstagram.user.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.project.jstagram.post.model.Comments;
+import com.project.jstagram.post.model.Post;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;

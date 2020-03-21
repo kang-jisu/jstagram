@@ -1,7 +1,7 @@
-package com.project.jstagram.controller;
+package com.project.jstagram.post.controller;
 
-import com.project.jstagram.model.Comments;
-import com.project.jstagram.service.CommentsService;
+import com.project.jstagram.post.model.Comments;
+import com.project.jstagram.post.service.CommentsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

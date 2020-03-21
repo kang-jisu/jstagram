@@ -1,18 +1,16 @@
-package com.project.jstagram.controller;
+package com.project.jstagram.post.controller;
 
-import com.project.jstagram.model.Post;
-import com.project.jstagram.service.CommentsService;
-import com.project.jstagram.service.PostService;
-import com.project.jstagram.service.UserService;
+import com.project.jstagram.post.model.Post;
+import com.project.jstagram.post.service.CommentsService;
+import com.project.jstagram.post.service.PostService;
+import com.project.jstagram.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.transaction.Transactional;
 import java.io.*;
-import java.nio.file.Files;
 import java.util.List;
 
 @RequestMapping("/api/")

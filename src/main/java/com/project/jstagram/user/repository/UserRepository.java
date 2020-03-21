@@ -1,6 +1,6 @@
-package com.project.jstagram.repository;
+package com.project.jstagram.user.repository;
 
-import com.project.jstagram.model.User;
+import com.project.jstagram.user.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

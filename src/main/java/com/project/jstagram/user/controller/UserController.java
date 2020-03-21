@@ -1,12 +1,11 @@
-package com.project.jstagram.controller;
+package com.project.jstagram.user.controller;
 
-import com.project.jstagram.model.User;
-import com.project.jstagram.service.UserService;
+import com.project.jstagram.user.model.User;
+import com.project.jstagram.user.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 

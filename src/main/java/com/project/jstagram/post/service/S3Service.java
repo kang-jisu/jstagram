@@ -1,4 +1,4 @@
-package com.project.jstagram.service;
+package com.project.jstagram.post.service;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;

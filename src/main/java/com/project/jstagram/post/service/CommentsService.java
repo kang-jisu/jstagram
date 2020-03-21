@@ -1,10 +1,10 @@
-package com.project.jstagram.service;
+package com.project.jstagram.post.service;
 
-import com.project.jstagram.model.Comments;
-import com.project.jstagram.model.Post;
-import com.project.jstagram.repository.CommentsRepository;
-import com.project.jstagram.repository.PostRepository;
-import com.project.jstagram.repository.UserRepository;
+import com.project.jstagram.post.model.Comments;
+import com.project.jstagram.post.model.Post;
+import com.project.jstagram.post.repository.CommentsRepository;
+import com.project.jstagram.post.repository.PostRepository;
+import com.project.jstagram.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

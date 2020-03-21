@@ -1,12 +1,12 @@
-package com.project.jstagram.controller;
+package com.project.jstagram.post.controller;
 
-import com.project.jstagram.model.Comments;
-import com.project.jstagram.model.Post;
-import com.project.jstagram.model.User;
-import com.project.jstagram.service.CommentsService;
-import com.project.jstagram.service.PostService;
-import com.project.jstagram.service.S3Service;
-import com.project.jstagram.service.UserService;
+import com.project.jstagram.post.model.Comments;
+import com.project.jstagram.post.model.Post;
+import com.project.jstagram.user.model.User;
+import com.project.jstagram.post.service.CommentsService;
+import com.project.jstagram.post.service.PostService;
+import com.project.jstagram.post.service.S3Service;
+import com.project.jstagram.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;

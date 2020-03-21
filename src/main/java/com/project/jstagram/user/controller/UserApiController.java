@@ -1,14 +1,10 @@
-package com.project.jstagram.controller;
+package com.project.jstagram.user.controller;
 
-import com.project.jstagram.model.Post;
-import com.project.jstagram.model.User;
-import com.project.jstagram.service.UserService;
-import org.springframework.stereotype.Controller;
+import com.project.jstagram.user.model.User;
+import com.project.jstagram.user.service.UserService;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 

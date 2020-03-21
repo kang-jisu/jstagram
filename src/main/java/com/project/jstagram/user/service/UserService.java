@@ -1,8 +1,7 @@
-package com.project.jstagram.service;
+package com.project.jstagram.user.service;
 
-import com.project.jstagram.model.User;
-import com.project.jstagram.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.project.jstagram.user.model.User;
+import com.project.jstagram.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

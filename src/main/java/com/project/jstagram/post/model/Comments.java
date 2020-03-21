@@ -1,4 +1,4 @@
-package com.project.jstagram.model;
+package com.project.jstagram.post.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

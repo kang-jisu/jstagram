@@ -1,6 +1,6 @@
-package com.project.jstagram.repository;
+package com.project.jstagram.post.repository;
 
-import com.project.jstagram.model.Comments;
+import com.project.jstagram.post.model.Comments;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
