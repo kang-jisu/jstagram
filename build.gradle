@@ -36,5 +36,15 @@ dependencies {
     compile("org.springframework.cloud:spring-cloud-aws-context:2.1.4.RELEASE")
     compile("org.springframework.cloud:spring-cloud-aws-autoconfigure:2.1.4.RELEASE")
 
+    // security
+    compile("org.springframework.boot:spring-boot-starter-security")
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+    testImplementation 'org.springframework.security:spring-security-test'
+
+    // jwt token
+    compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+    // json 파싱
+    compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1'
+
 
 }
