@@ -4,7 +4,7 @@ import com.project.jstagram.post.model.Comments;
 import com.project.jstagram.post.model.Post;
 import com.project.jstagram.post.repository.CommentsRepository;
 import com.project.jstagram.post.repository.PostRepository;
-import com.project.jstagram.user.repository.UserRepository;
+import com.project.jstagram.member.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,7 @@ public class CommentsService {
     private PostRepository postRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private MemberRepository memberRepository;
 
     @Autowired
     private CommentsRepository commentsRepository;

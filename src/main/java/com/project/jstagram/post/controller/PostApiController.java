@@ -3,7 +3,7 @@ package com.project.jstagram.post.controller;
 import com.project.jstagram.post.model.Post;
 import com.project.jstagram.post.service.CommentsService;
 import com.project.jstagram.post.service.PostService;
-import com.project.jstagram.user.service.UserService;
+import com.project.jstagram.member.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +25,7 @@ public class PostApiController {
     }
 
     @Autowired
-    private UserService userService;
+    private MemberService memberService;
     @Autowired
     private CommentsService commentsService;
 

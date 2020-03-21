@@ -1,11 +1,11 @@
 package com.project.jstagram.post.service;
 
 
+import com.project.jstagram.member.model.Member;
 import com.project.jstagram.post.model.Comments;
 import com.project.jstagram.post.model.Post;
-import com.project.jstagram.user.model.User;
 import com.project.jstagram.post.repository.PostRepository;
-import com.project.jstagram.user.repository.UserRepository;
+import com.project.jstagram.member.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,19 +19,15 @@ import java.util.List;
 @Service
 public class PostService {
 
+    @Autowired
     private PostRepository postRepository;
 
     @Autowired
-    private UserRepository userRepository;
-
+    private MemberRepository memberRepository;
 
     @Autowired
     private S3Service s3Service;
 
-
-    public PostService(PostRepository postRepository){
-        this.postRepository=postRepository;
-    }
 
 
     public Post getOne(Long id){
@@ -40,8 +36,8 @@ public class PostService {
 
 
     public String findAuthorByid(Long id){
-        User user = userRepository.getOne(id);
-        return user.getUserId();
+        Member member= memberRepository.getOne(id);
+        return member.getMemberId();
     }
 
     public List<Comments> findComments(Long id){
@@ -61,8 +57,10 @@ public class PostService {
     @Transactional
     public void deleteOne(Long id){
         String filename=postRepository.getOne(id).getImage();
-        int idx = filename.lastIndexOf("/");
-        s3Service.delete(filename.substring(idx+1));
+        if(filename!=null) {
+            int idx = filename.lastIndexOf("/");
+            s3Service.delete(filename.substring(idx + 1));
+        }
         postRepository.deleteById(id);
 
     }
@@ -76,8 +74,10 @@ public class PostService {
         if(file.isEmpty())oldpost.setImage(oldpost.getImage()); //file 선택된게 없이 수정할땐 기존 파일 그대로
         else {
             String oldfilename=postRepository.getOne(id).getImage();
-            int idx = oldfilename.lastIndexOf("/");
-            s3Service.delete(oldfilename.substring(idx+1));
+            if(oldfilename!=null) {
+                int idx = oldfilename.lastIndexOf("/");
+                s3Service.delete(oldfilename.substring(idx + 1));
+            }
             String storedFileName = s3Service.upload(file,"jstagram");
             oldpost.setImage(storedFileName); //디비에 파일 저장
         }
@@ -93,7 +93,7 @@ public class PostService {
             post.setImage(storedFileName);
         }
 
-       return  this.postRepository.save(post);
+        return  this.postRepository.save(post);
     }
 
     //api구현용
