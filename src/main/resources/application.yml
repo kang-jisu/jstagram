@@ -1,9 +1,10 @@
-
 spring:
   jpa:
     hibernate:
       generate-ddl: true
       ddl-auto: update
+      jdbc:
+        time_zone: KST
     show-sql: true
   servlet:
     multipart:
