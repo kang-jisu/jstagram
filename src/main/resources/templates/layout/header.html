@@ -5,31 +5,32 @@
         <link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
     </head>
-   <body>
-       <div th:fragment="header">
-       <nav class=" fixed-top navbar navbar-expand-lg bg-white border-bottom border-gray">
-           <div class="container">
-               <div class="row col-12">
-                   <div class="col-4 ">
-                       <span><i class="fab fa-instagram fa-2x m-2 mt-3 mb-1"></i></span>
-                       <a class="navbar-brand" style="color:black; font-family: 'Lobster',cursive;font-size:30px;" href="/">Jstagram</a>
-                   </div>
-                   <div class="col-4 form-inline " >
-                       <form class="form ">
-                           <input class="form-control m-2" type="search" placeholder="Search" aria-label="Search">
-                           <button class="btn btn-outline-success m-2" type="submit">Search</button>
-                       </form>
-                   </div>
-                   <div class="col-4 text-right">
-                       <a href="/insert" style="color:black;">
-                           <i class="far fa-edit fa-2x m-2 mt-3 mb-1 "></i></a>
-                       <span> <i class="far fa-heart fa-2x m-2 mt-3 mb-1"></i></span>
-                       <span><i class="far fa-user fa-2x m-2 mt-3 mb-1"></i></span>
+    <body>
+        <div th:fragment="header">
+            <nav class=" fixed-top navbar navbar-expand-lg bg-white border-bottom border-gray">
+                <div class="container">
+                    <div class="row col-12">
+                        <div class="col-4 ">
+                            <span><i class="fab fa-instagram fa-2x m-2 mt-3 mb-1"></i></span>
+                            <a class="navbar-brand" style="color:black; font-family: 'Lobster',cursive;font-size:30px;" href="/">Jstagram</a>
+                        </div>
+                        <div class="col-4 form-inline " >
+                            <form class="form ">
+                                <input class="form-control m-2" type="search" placeholder="Search" aria-label="Search">
+                                <button class="btn btn-outline-success m-2" type="submit">Search</button>
+                            </form>
+                        </div>
+                        <div class="col-4 text-right">
+                            <a href="/insert" style="color:black;">
+                                <i class="far fa-edit fa-2x m-2 mt-3 mb-1 "></i></a>
+                            <span> <i class="far fa-heart fa-2x m-2 mt-3 mb-1"></i></span>
+                            <a href="/user/info" style="color:black;">
+                                <i class="far fa-user fa-2x m-2 mt-3 mb-1 "></i></a>
 
-                   </div>
-               </div>
-           </div>
-       </nav>
-       </div>
-   </body>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </body>
 </html>

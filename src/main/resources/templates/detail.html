@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Jstagram</title>
@@ -39,7 +39,7 @@
                         <span style="font-size:85%" class="card-title font-weight-bold"
                               th:text="${mapList.get(comment.author)}"></span>
                                 <span style="font-size:75%" class="card-text" th:text="${comment.comment}"></span>
-                                <button type="button" class="close " aria-label="Close">
+                                <button type="button" class="close " aria-label="Close" sec:authorize="isAuthenticated()" th:if="${comment.author.toString().equals(user.id.toString())}">
                                     <a th:href="'/detail/'+${post.id}+'/comments/delete/'+${comment.id}"
                                        aria-hidden="true" style="color:lightslategrey">&times;</a>
                                 </button>
@@ -63,13 +63,13 @@
                         </div>
                         <form th:action="'/detail/comments/'+${post.id}" method="post"
                               style="position:absolute; bottom:0px;">
-                            <div class="form-row card-footer w-auto m-0">
-                                <div class="col">
+                            <div class="form-row card-footer w-auto m-0" sec:authorize="isAuthenticated()">
+                                <div class="col d-none">
                                     <input type="number" class="form-control" placeholder="작성자" id="comment_user_id"
-                                           name="author">
+                                           name="author" th:value="${user.id}">
                                 </div>
                                 <input type="hidden" id="comment_post_id" name="postId" th:value="${post.id}">
-                                <div class="col-5">
+                                <div class="col-8">
                                     <input type="text" class="form-control" id="comment_text" name="comment"
                                            placeholder="댓글 달기">
                                 </div>
@@ -78,16 +78,21 @@
                                     </button>
                                 </div>
                             </div>
+                            <div sec:authorize="isAnonymous()" class="form-row card-footer w-auto m-0" >
+                                로그인 후 댓글을 이용하실 수 있습니다
+                            </div>
+
                         </form>
                     </div>
                 </div>
             </div>
 
 
+            <div sec:authorize="isAuthenticated()">
+                <a th:if="${post.author.toString().equals(user.id.toString())}" class="btn btn-success btn-block " th:href="'/update/'+${post.id}"  style="width: 935px;">수정</a>
 
-                <a class="btn btn-success btn-block " th:href="'/update/'+${post.id}"  style="width: 935px;">수정</a>
-
-                <a class="btn btn-info btn-block " th:href="'/delete/'+${post.id}"  style="width: 935px;">삭제</a>
+                <a th:if="${post.author.toString().equals(user.id.toString())}" class="btn btn-info btn-block " th:href="'/delete/'+${post.id}"  style="width: 935px;">삭제</a>
+            </div>
         </div>
     </div>
 
@@ -98,53 +103,3 @@
 
 </body>
 </html>
-
-
-<!-- 디자인없는코드<div class="container">-->
-
-<!--    <div class="row justify-content-center">-->
-<!--        <a th:href="'/update/'+${post.id}">수정</a>-->
-<!--        <a th:href="'/delete/'+${post.id}">삭제</a>-->
-<!--        <br>-->
-<!--        <table>-->
-<!--            <tr>-->
-<!--                <td th:rowspan="4"><img th:src="'/images/'+${post.image}" th:width="500px"/></td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td th:text="${author}"></td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td th:text="${post.content}"></td>-->
-<!--                <td th:text="${#calendars.format(post.regDate,'YYYY년 MM월 dd일 ')}"></td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td>댓글</td>-->
-<!--            </tr>-->
-<!--        </table>-->
-
-<!--        <table>-->
-<!--            <form th:action="'/detail/comments/'+${post.id}" method="post">-->
-<!--                <tr>-->
-<!--                    <td>작성자(번호)</td>-->
-<!--                    <td>댓글</td>-->
-<!--                </tr>-->
-<!--                <tr th:each="comment : ${comments.get(post.id)}">-->
-<!--                    <td th:text="${mapList.get(comment.author)}"></td>-->
-<!--                    <td th:text="${comment.comment}"></td>-->
-<!--                    <td th:text="${#calendars.format(comment.regDate,'YYYY년 MM월 dd일 ')}"></td>-->
-<!--                    <td><a th:href="'/detail/'+${post.id}+'/comments/delete/'+${comment.id}">삭제</a></td>-->
-<!--                </tr>-->
-<!--                <tr>-->
-<!--                    <td><input type="number" id="comment_user_id" name="author"></td>-->
-<!--                    <td><input type="hidden" id="comment_post_id" name="postId" th:value="${post.id}"></td>-->
-<!--                    <td><input type="text" id="comment_text" name="comment"></td>-->
-<!--                    <td>-->
-<!--                        <button type="submit" id="comment_insert">작성</button>-->
-<!--                    </td>-->
-<!--                </tr>-->
-<!--            </form>-->
-<!--        </table>-->
-
-<!--        <a href="/">뒤로가기</a>-->
-<!--    </div>-->
-<!--</div>-->

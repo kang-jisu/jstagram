@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Jstagram</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    <link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+
+</head>
+<body class="bg-light">
+
+<nav th:replace="layout/header::header"></nav>
+<div class="mt-5 pt-5 ">
+   denied : <span th:text="${msg}"></span>
+    <a sec:authorize="isAnonymous()"  href="/user/signup" style="color:black;">
+        회원가입
+    </a>
+    <a sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a>
+</div>
+</body>
+</html>

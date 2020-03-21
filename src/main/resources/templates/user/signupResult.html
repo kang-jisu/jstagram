@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Jstagram</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    <link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+
+</head>
+<body class="bg-light">
+
+<nav th:replace="layout/header::header"></nav>
+<div class="mt-5 pt-5 ">
+  회원가입이 완료되었습니다. 로그인 해주세요
+</div>
+</body>
+</html>
+
+
+<!--<hr>-->
+
+<!--<a th:href="@{'/login'}">로그인</a>-->
+<!--<a th:href="@{'/index'}">index</a>-->
+
+<!--<hr>-->
+
+<!--<a sec:authorize="isAnonymous()" th:href="@{/user/login}">로그인</a>-->
+<!--<a sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a>-->
+<!--<a sec:authorize="isAnonymous()" th:href="@{/user/signup}">회원가입</a>-->
+<!--<a sec:authorize="hasRole('ROLE_MEMBER')" th:href="@{/user/info}">내정보</a>-->
+<!--<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin}">어드민</a>-->
