@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" ﻿>
 <head>
     <meta charset="UTF-8">
     <title>Jstagram</title>
@@ -13,7 +13,10 @@
 
 <nav th:replace="layout/header::header"></nav>
 <div class="mt-5 pt-5 ">
-  회원가입이 완료되었습니다. 로그인 해주세요
+  회원가입이 완료되었습니다. 로그인 해주세요.<br/>
+    <a sec:authorize="isAnonymous()"  href="/user/login" style="color:black;">
+        로그인 페이지
+    </a>
 </div>
 </body>
 </html>
