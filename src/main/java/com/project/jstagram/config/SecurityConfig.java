@@ -9,14 +9,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 
 @Configuration
 @EnableWebSecurity
@@ -34,7 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) //로그인 상관 없이 허용을 해줘야할 리소스 위치를 정의한다.
     {
-        web.ignoring().antMatchers("/css/**", "/script/**", "image/**");
+        web.ignoring().antMatchers("/css/**", "/script/**", "image/**","/js/**");
     }
 
 
@@ -42,27 +37,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 //.andMatchers는 특정 경로 지정
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/user/info").hasRole("ADMIN")
-                .antMatchers("/user/info").hasRole("MEMBER")
-                .antMatchers("/insert").hasRole("ADMIN")
-                .antMatchers("/insert").hasRole("MEMBER")
-                .antMatchers("/update").hasRole("ADMIN")
-                .antMatchers("/update").hasRole("MEMBER")
+                .antMatchers("/user/admin/**").hasRole("ADMIN")
+                .antMatchers("/user/info").hasAnyRole("ADMIN","MEMBER")
+                .antMatchers("/insert").hasAnyRole("ADMIN","MEMBER")
+                .antMatchers("/update").hasAnyRole("ADMIN","MEMBER")
                 .antMatchers("/**").permitAll()
                 .and()
                 .formLogin()
-                .loginPage("/user/login")
-                .defaultSuccessUrl("/user/login/result")
-                //.failureUrl
-                //.loginProcessinUrl()은 post로 수행하는 url
+                    .loginPage("/user/login") // 기존 spring security 로그인 페이지 말고 custom으로
+                    .loginProcessingUrl("/user/login") // user/login.html에서 form post 로 보내주는 url
+                    .defaultSuccessUrl("/user/success/login") // 저기 위에 hasrole에 걸려서 로그인하게되면 저기 페이지로 가고 그런거 없으면 default페이지로감
+//                    .failureUrl("/user/denied/login") 로그인 정보 틀리면 /user/login?error 로 보내짐. 그거로 html에서 구분하면됨
                 .permitAll()
                 .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
-                .logoutSuccessUrl("/user/login")
+                .logoutSuccessUrl("/") // 로그아웃하면 메인페이지로 이
                 .invalidateHttpSession(true)//http세션 초기화
-                //deleteCookies("key")이런거도있음 로그아웃시 특정 쿠키 제거
+                //deleteCookies("key")이런거도있음 로그아웃시 특정 동쿠키 제거
                 .and()
                 .exceptionHandling().accessDeniedPage("/user/denied");
 

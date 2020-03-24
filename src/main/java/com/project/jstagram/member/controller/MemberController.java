@@ -3,67 +3,42 @@ package com.project.jstagram.member.controller;
 import com.project.jstagram.member.model.Member;
 import com.project.jstagram.member.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
-import java.util.Random;
 
 @Controller
-@RequestMapping
+@RequestMapping("/user")
 public class MemberController {
+
     @Autowired
     private MemberService memberService;
 
-    @GetMapping("/user/signup")
-    public String getUserSignUp(){
-        return "user/signup";
-    }
 
 
-    @GetMapping("/user/signupResult")
-    public String getUserSignUpResult(){
-        return "user/signupResult";
-    }
-
-    @GetMapping("/user/login")
-    public String getUserLogin(){
-        return "user/login";
-    }
-
-    @GetMapping("/user/login/result")
-    public String getUserLoginResult(){
-        return "user/loginResult";
-    }
-
-    @GetMapping("/user/logout/result")
-    public String Logout(){
-        return "/";
-    }
-
-    @GetMapping("/user/denied")
-    public String getUserDenied(Model model){
-        model.addAttribute("msg","거부되었습니다.");
+    @GetMapping("/denied")
+    public String defaultDeniedPage(Model model) {
+        model.addAttribute("msg", "거부되었습니다.");
         return "user/userDenied";
     }
 
 
-    @GetMapping("/user/denied/{errormsg}")
-    public String getUserDeniedMsg(@PathVariable("errormsg")String msg, Model model){
-        model.addAttribute("msg",msg);
+    @GetMapping("/denied/{errormsg}")
+    public String DeniedMsgPage(@PathVariable("errormsg") String msg, Model model) {
+        model.addAttribute("msg", msg);
         return "user/userDenied";
     }
+
     // 내 정보 페이지
-    @GetMapping("/user/info")
-    public String MyInfo(@AuthenticationPrincipal User user, Model model) {
+    @GetMapping("/info")
+    public String userInfo(@AuthenticationPrincipal User user, Model model) {
         Optional<Member> m = memberService.findByEmail(user.getUsername());
-        model.addAttribute("user",m.get());
+        model.addAttribute("user", m.get());
         return "user/userInfo";
     }
 
@@ -74,15 +49,40 @@ public class MemberController {
     }
 
 
-    @PostMapping(value="/user/signup",produces ="application/json")
-    public String postSignUp(  Member member){
+    // 회원 가입 페이지
+    @GetMapping("/signup")
+    public String signUpPage() {
+        return "user/signup";
+    }
 
-        Optional<Member> checkmem= memberService.findByEmail(member.getEmail());
-        if(checkmem.isPresent()) return "redirect:/user/denied/emailerror";
+    // 회원 가입
+    @PostMapping(value = "/signup", produces = "application/json")
+    public String signUpMember(Member member) {
+
+        Optional<Member> checkmem = memberService.findByEmail(member.getEmail());
+        if (checkmem.isPresent()) return "redirect:/user/denied/emailerror";
         else {
             memberService.signUpMember(member, "y");
-            return "redirect:/user/signupResult";
+            return "redirect:/user/success/signup";
         }
+    }
+    // 회원 가입 성공
+    @GetMapping("/success/signup")
+    public String signUpSuccessPage() {
+        return "user/sign-up-success";
+    }
+
+
+    // 로그인 페이지
+    @GetMapping("/login")
+    public String login() {
+        return "user/login";
+    }
+
+    // default 로그인 성공 페이지 => default 아닌 경우는 has role 에서 걸려서 로그인한경우라서 원래 보려했던 페이지로 바로 이동함.
+    @GetMapping("/success/login")
+    public String loginSuccessPage() {
+        return "user/login-success";
     }
 
 }
