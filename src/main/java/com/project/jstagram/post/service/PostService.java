@@ -26,14 +26,15 @@ public class PostService {
     private MemberRepository memberRepository;
 
     @Autowired
+    private CommentsService commentsService;
+
+    @Autowired
     private S3Service s3Service;
 
-
-
+    // api 용 # TODO findById로 해서 Optional error 걸어주기
     public Post getOne(Long id){
         return this.postRepository.getOne(id);
     }
-
 
     public String findAuthorByid(Long id){
         Member member= memberRepository.getOne(id);
@@ -49,18 +50,15 @@ public class PostService {
         return postRepository.findAll();
     }
 
-    public void createPost(Post post){
-        post.setRegDate(new Date());
-        this.postRepository.save(post);
-    }
 
     @Transactional
     public void deleteOne(Long id){
+        commentsService.deleteAllByPostId(id); //post에 딸린 comments 먼저 지우
         String filename=postRepository.getOne(id).getImage();
         if(filename!=null) {
             int idx = filename.lastIndexOf("/");
             s3Service.delete(filename.substring(idx + 1));
-        }
+        } //S3에서 파일 지우기
         postRepository.deleteById(id);
 
     }
@@ -87,24 +85,19 @@ public class PostService {
     @Transactional
     public Post uploadFile(MultipartFile file,Post post) throws IOException {
         post.setRegDate(new Date());
-
         if(!file.isEmpty()) {
             String storedFileName = s3Service.upload(file,"jstagram");
             post.setImage(storedFileName);
         }
-
         return  this.postRepository.save(post);
     }
 
     //api구현용
     public void upload(MultipartFile file,Post post) throws IOException{
         post.setRegDate(new Date());
-
         if(!file.isEmpty()) {
-
             String storedFileName = s3Service.upload(file,"jstagram");
             post.setImage(storedFileName);
-
         }
         this.postRepository.save(post);
     }

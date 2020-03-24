@@ -9,19 +9,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("")
+@RequestMapping("/comments")
 public class CommentsController {
 
     @Autowired
     private CommentsService commentsService;
 
-    @PostMapping("/comments")
+    @PostMapping("")
     public String createComment(Comments comments) {
         commentsService.createComment(comments);
         return "redirect:/";
     }
 
-    @GetMapping("/comments/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String deleteComment(@PathVariable("id") Long id) {
         commentsService.deleteOne(id);
         return "redirect:/";
@@ -29,7 +29,7 @@ public class CommentsController {
 
 
     //deatil페이지 댓글작성
-    @PostMapping("/detail/comments/{postid}")
+    @PostMapping("/detail/{postid}")
     public String createCommentDetail(@PathVariable("postid") Long postid, Comments comments) {
         commentsService.createComment(comments);
         return "redirect:/detail/" + postid;
@@ -37,7 +37,7 @@ public class CommentsController {
 
 
     //detail페이지 댓글 삭제하고 원래 보던 그 detail페이지로 가게
-    @GetMapping("/detail/{postid}/comments/delete/{id}")
+    @GetMapping("/detail/{postid}/delete/{id}")
     public String deleteCommentDetail(@PathVariable("postid") Long postid, @PathVariable("id") Long id) {
         commentsService.deleteOne(id);
         return "redirect:/detail/" + postid;

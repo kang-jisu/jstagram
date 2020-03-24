@@ -40,7 +40,7 @@
                               th:text="${mapList.get(comment.author)}"></span>
                                 <span style="font-size:75%" class="card-text" th:text="${comment.comment}"></span>
                                 <button type="button" class="close " aria-label="Close" sec:authorize="isAuthenticated()" th:if="${comment.author.toString().equals(user.id.toString())}">
-                                    <a th:href="'/detail/'+${post.id}+'/comments/delete/'+${comment.id}"
+                                    <a th:href="'/comments/detail/'+${post.id}+'/delete/'+${comment.id}"
                                        aria-hidden="true" style="color:lightslategrey">&times;</a>
                                 </button>
                                 <br/>
@@ -61,7 +61,7 @@
                                   th:text="${#calendars.format(post.regDate,'MM월 dd일 ')}"></a>
                             </p>
                         </div>
-                        <form th:action="'/detail/comments/'+${post.id}" method="post"
+                        <form th:action="'/comments/detail/'+${post.id}" method="post"
                               style="position:absolute; bottom:0px;">
                             <div class="form-row card-footer w-auto m-0" sec:authorize="isAuthenticated()">
                                 <div class="col d-none">

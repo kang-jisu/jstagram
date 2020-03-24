@@ -17,8 +17,6 @@ public class CommentsService {
     @Autowired
     private PostRepository postRepository;
 
-    @Autowired
-    private MemberRepository memberRepository;
 
     @Autowired
     private CommentsRepository commentsRepository;
