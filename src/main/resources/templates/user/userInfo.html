@@ -22,7 +22,8 @@
         설명 : <span th:text="${user.text}"></span><br/>
         가입날짜 : <span th:text="${user.createdDate}"></span><br/>
 
-    <a sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a>
+    <a sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a> <br/>
+        <a sec:authorize="isAuthenticated()" th:href="@{/user/withdraw}">회원 탈퇴</a>
     </div>
 </div>
 </body>
