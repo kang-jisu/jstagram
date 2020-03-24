@@ -39,7 +39,7 @@ public class Post {
     @Column
     private Long author;
 
-    @OneToMany(fetch=FetchType.EAGER,cascade = CascadeType.ALL)
+    @OneToMany(fetch=FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name="postId")
     private List<Comments> comments;
 

@@ -12,7 +12,7 @@ import java.util.List;
 @Entity
 @Setter
 @ToString
-@JsonIgnoreProperties({"hibernateLazyInitializer","handler"}) // 이 어노테이션 무슨의미인지 알아보기 2019.11.22
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 @Table(name="member")
 public class Member {
 
@@ -21,32 +21,32 @@ public class Member {
     private Long id;
 
     @Column(length=30,nullable=false)
-    private String email;
+    private String email; // 로그인 이메일
 
     @Column(length=100,nullable = false)
-    private String password;
+    private String password; // 로그인 패스워드
 
     @Column
-    private String memberId;
+    private String memberId; // 계정 아이디
 
     @Column
-    private String text;
+    private String text; // 프로필 소개
 
     @Column
-    private String phone;
+    private String phone; // 번호
 
     @Column
-    private String birth;
+    private String birth; //생년월일
 
     @Column
-    private LocalDateTime createdDate;
+    private LocalDateTime createdDate; // 계정 생성일
     @Column
-    private LocalDateTime modifiedDate;
+    private LocalDateTime modifiedDate; // 정보 변경일
 
     @Column
-    private String verify;
+    private String verify; // 회원가입 후 이메일인증같은 권한 확인-> 지금은 모두 y(yes) # TODO 나중엔 변수 넣고 이메일같은거 인증 넣어서 링크확인해야 y로 변경
 
-    @OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL )
+    @OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL )
     @JoinColumn(name="author")
     private List<Post> post;
 
