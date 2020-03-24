@@ -3,7 +3,6 @@ package com.project.jstagram.member.controller;
 import com.project.jstagram.member.model.Member;
 import com.project.jstagram.member.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -19,14 +18,11 @@ public class MemberController {
     @Autowired
     private MemberService memberService;
 
-
-
     @GetMapping("/denied")
     public String defaultDeniedPage(Model model) {
         model.addAttribute("msg", "거부되었습니다.");
         return "user/userDenied";
     }
-
 
     @GetMapping("/denied/{errormsg}")
     public String DeniedMsgPage(@PathVariable("errormsg") String msg, Model model) {
@@ -69,7 +65,7 @@ public class MemberController {
     // 회원 가입 성공
     @GetMapping("/success/signup")
     public String signUpSuccessPage() {
-        return "user/sign-up-success";
+        return "user/signup-success";
     }
 
 
@@ -83,6 +79,18 @@ public class MemberController {
     @GetMapping("/success/login")
     public String loginSuccessPage() {
         return "user/login-success";
+    }
+
+    @GetMapping("/withdraw")
+    public String withdrawMember(@AuthenticationPrincipal User user){
+            Optional<Member> m = memberService.findByEmail(user.getUsername());
+            if(m.isPresent()) {
+                memberService.deleteMember(m.get().getId());
+                return "redirect:/user/logout";
+            }
+            else {
+                return "redirect:/user/denied/withdrawerror";
+            }
     }
 
 }

@@ -59,33 +59,18 @@ public class MemberService implements UserDetailsService {
         return memberRepository.save(member).getId();
     }
 
+    //회원 탈퇴
+    public void deleteMember(Long id) {
+        log.info("delete member id : "+ id);
+        this.memberRepository.deleteById(id);
+    }
 
     public Optional<Member> findByEmail(String email) {
         return memberRepository.findByEmail(email);
     }
 
-    public void setVerify(String verify) {
-        Member m = findByVerify(verify);
-        m.setVerify("y");
-        memberRepository.save(m);
-    }
-
-    public Member findByVerify(String verify) {
-        return memberRepository.findByVerify(verify);
-    }
-
-
     /// user
-
     public List<Member> findAllMember() {
         return memberRepository.findAll();
-    }
-
-    public void createMember(Member member) {
-        this.memberRepository.save(member);
-    }
-
-    public void deleteMember(Long id) {
-        this.memberRepository.deleteById(id);
     }
 }
