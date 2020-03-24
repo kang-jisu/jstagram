@@ -13,13 +13,24 @@
 
 <nav th:replace="layout/header::header"></nav>
 <div class="mt-5 pt-5 ">
-    <form action="/user/login" method="post">
+<!--    /user/login?error 일때는 밑에 잘못됐다고 뜸. 다시 제출했을때 인식 안돼서 form 두개로 나눔-->
+    <form th:if="${param.error}" action="/user/login?" method="post">
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
         <!--spring security가 적용되면 post방식으로 보내는 데이터에 csrf토큰값이 필요하다 -->
         <input type="text" name="username" placeholder="이메일 입력해주세요">
         <input type="password" name="password" placeholder="비밀번호">
-        <button type="submit">로그인</button>
+        <button type="submit">로그인</button><br/>
+        잘못된 아이디나 암호입니다.
     </form>
+
+    <form th:unless="${param.error}" action="/user/login" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <!--spring security가 적용되면 post방식으로 보내는 데이터에 csrf토큰값이 필요하다 -->
+        <input type="text" name="username" placeholder="이메일 입력해주세요">
+        <input type="password" name="password" placeholder="비밀번호">
+        <button type="submit">로그인</button><br/>
+    </form>
+
     <hr/>
     <a href="/user/signup" style="color:black;">
         회원가입

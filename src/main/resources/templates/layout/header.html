@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
     <head>
-        <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+        <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
         <link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
     </head>
@@ -26,6 +26,8 @@
                             <span> <i class="far fa-heart fa-2x m-2 mt-3 mb-1"></i></span>
                             <a href="/user/info" style="color:black;">
                                 <i class="far fa-user fa-2x m-2 mt-3 mb-1 "></i></a>
+                            <a sec:authorize="isAuthenticated()" href="/user/logout" style="color:black;">
+                                <i class="fas fa-sign-out-alt fa-2x m-2 mt-3 mb-1 "></i></a>
 
                         </div>
                     </div>

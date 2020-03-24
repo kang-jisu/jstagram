@@ -17,17 +17,23 @@
     <div class="container">
         <div class="row justify-content-center">
 
+            <!-- postList 하나씩 보여줌 -->
             <div class="card mb-5 " style="width: 614px;" th:each="post : ${postList}">
+
+                <!-- 유저 id . 헤더부분-->
                 <div class="card-header bg-white "><a class="text-body font-weight-bold text-monospace "
                                                       th:href="'/detail/'+${post.id}"
                                                       th:text="${mapList.get(post.author)}"></a>
+                    <!-- 권한이 있으면 삭제버튼 -->
                     <button type="button" class="close" aria-label="Close" sec:authorize="isAuthenticated()" th:if="${post.author.toString().equals(user.id.toString())}">
                         <a th:href="'/delete/'+${post.id}" aria-hidden="true">&times;</a>
                     </button>
                 </div>
 
+                <!-- 이미지-->
                 <img th:src="${post.image}" class="card-img-top" alt="...">
 
+                <!--  게시글 내용-->
                 <div class="card-body pt-2 pb-0  border border-bottom border-gray">
                     <section>
                         <span>
@@ -56,6 +62,7 @@
                 <!--<a sec:authorize="isAnonymous()" th:href="@{/user/login}">로그인</a>-->
                 <!--<a sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a>-->
                 <form th:action="@{/comments}" method="post">
+                    <!-- 로그인 되어있을때는 댓글 등록 가능-->
                     <div class="form-row card-footer w-auto m-0" sec:authorize="isAuthenticated()" >
                         <div class="col d-none"  >
                             <input type="number" class="form-control" placeholder="작성자" id="comment_user_id"
@@ -70,6 +77,8 @@
                             <button class="btn btn-outline-secondary" type="submit" id="comment_insert">작성</button>
                         </div>
                     </div>
+
+                    <!-- 로그인 상태 아닐 경우-->
                     <div sec:authorize="isAnonymous()" class="form-row card-footer w-auto m-0" >
                         로그인 후 댓글을 이용하실 수 있습니다.
                     </div>
