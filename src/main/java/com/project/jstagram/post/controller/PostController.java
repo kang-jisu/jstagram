@@ -138,6 +138,8 @@ public class PostController {
             List<Post> post = postService.findAllPostByAuthor(m.get().getId());
             model.addAttribute("postList", post); //글 목록
             model.addAttribute("user",m.get());
+            model.addAttribute("followings",m.get().getFollowings().size());
+            model.addAttribute("followers",m.get().getFollowers().size());
             if (principal != null) {
                 Optional<Member> loginMember = memberService.findByEmail(principal.getName());
                 model.addAttribute("loginId", loginMember.get().getId()); // 현재 로그인한 유저가 프로필사이트 유저면 프로필편집

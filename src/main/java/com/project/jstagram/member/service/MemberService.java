@@ -1,7 +1,9 @@
 package com.project.jstagram.member.service;
 
 import com.project.jstagram.member.domain.Role;
+import com.project.jstagram.member.model.Follow;
 import com.project.jstagram.member.model.Member;
+import com.project.jstagram.member.repository.FollowRepository;
 import com.project.jstagram.member.repository.MemberRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +29,24 @@ public class MemberService implements UserDetailsService {
     @Autowired
     private MemberRepository memberRepository;
 
+    @Autowired
+    private FollowRepository followRepository;
 
-    public Optional<Member> findByNickname(String nickname){
+    public Optional<Member> findById(Long id){
+        return memberRepository.findById(id);
+    }
+
+    public Optional<Member> findByNickname(String nickname) {
         return memberRepository.findByNickname(nickname);
+
+    }
+    public Optional<Member> findByEmail(String email) {
+        return memberRepository.findByEmail(email);
+    }
+
+    /// user
+    public List<Member> findAllMember() {
+        return memberRepository.findAll();
     }
 
     // spring security 로그인 method
@@ -38,19 +55,19 @@ public class MemberService implements UserDetailsService {
         //로그인시 입력한 아이디로 (pk가아닌)식별값. 예제는 이메일
 
         Optional<Member> member = memberRepository.findByEmail(useremail);
-            Member m = member.get();
-            List<GrantedAuthority> authorities = new ArrayList<>();
+        Member m = member.get();
+        List<GrantedAuthority> authorities = new ArrayList<>();
 
 
-            if (("rkdwltn0425@gmail.com").equals(useremail)) {
-                authorities.add(new SimpleGrantedAuthority(Role.ADMIN.getValue()));
-                log.info("login admin user ||  email : " + useremail);
-            } else {
-                if (m.getVerify().equals("y"))
-                    authorities.add(new SimpleGrantedAuthority(Role.MEMBER.getValue()));
-                log.info("login member user ||  email : " + useremail);
-            }
-            return new User(m.getEmail(), m.getPassword(), authorities); //이 값 데리고 비밀번호랑 조회에서 스프링에서 알아서 로그인 시켜줌
+        if (("rkdwltn0425@gmail.com").equals(useremail)) {
+            authorities.add(new SimpleGrantedAuthority(Role.ADMIN.getValue()));
+            log.info("login admin user ||  email : " + useremail);
+        } else {
+            if (m.getVerify().equals("y"))
+                authorities.add(new SimpleGrantedAuthority(Role.MEMBER.getValue()));
+            log.info("login member user ||  email : " + useremail);
+        }
+        return new User(m.getEmail(), m.getPassword(), authorities); //이 값 데리고 비밀번호랑 조회에서 스프링에서 알아서 로그인 시켜줌
 
     }
 
@@ -66,20 +83,12 @@ public class MemberService implements UserDetailsService {
 
     //회원 탈퇴
     public void deleteMember(Long id) {
-        log.info("delete member id : "+ id);
+        log.info("delete member id : " + id);
         this.memberRepository.deleteById(id);
     }
 
-    public Optional<Member> findByEmail(String email) {
-        return memberRepository.findByEmail(email);
-    }
 
-    /// user
-    public List<Member> findAllMember() {
-        return memberRepository.findAll();
-    }
-
-    public void updateUserInfo(Member member){
+    public void updateUserInfo(Member member) {
         Member oldMember = memberRepository.getOne(member.getId());
         oldMember.setNickname(member.getNickname());
         oldMember.setName(member.getName());
@@ -88,4 +97,12 @@ public class MemberService implements UserDetailsService {
         oldMember.setModifiedDate(LocalDateTime.now());
         memberRepository.save(oldMember);
     }
+
+    public void followMember(Member following, Member followed){
+        Follow f = new Follow();
+        f.setFollowingId(following.getId());
+        f.setFollowerId(followed.getId());
+        followRepository.save(f);
+    }
+
 }

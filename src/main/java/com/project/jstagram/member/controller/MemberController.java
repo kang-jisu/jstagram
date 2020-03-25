@@ -1,5 +1,6 @@
 package com.project.jstagram.member.controller;
 
+import com.project.jstagram.member.model.Follow;
 import com.project.jstagram.member.model.Member;
 import com.project.jstagram.member.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Optional;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/user")
@@ -122,6 +124,27 @@ public class MemberController {
     public String updateUserInfo(Member member){
         memberService.updateUserInfo(member);
         return "redirect:/user/info";
+    }
+
+    //follow
+
+    @GetMapping("/follow/{id}/login")
+    public String loginBeforefollow(@PathVariable("id")Long id){
+        Optional<Member> followedMember = memberService.findById(id);
+
+        return "redirect:/"+followedMember.get().getNickname(); //팔로우 눌러서 로그인 했는데 자신일경우 그냥 자기 프로필페이지로 , 아닌경우엔 팔로우
+    }
+
+
+    @GetMapping("/follow/{id}")
+    public String followMember(@PathVariable("id")Long id,  @AuthenticationPrincipal User user){
+        Optional<Member> loginMember = memberService.findByEmail(user.getUsername());
+        Optional<Member> followedMember = memberService.findById(id);
+
+        if(user!=null && loginMember.get()!=followedMember.get()) { // login member -> follow -> followed Member
+            memberService.followMember(loginMember.get(),followedMember.get());
+        }
+        return "redirect:/"+followedMember.get().getNickname(); //팔로우 눌러서 로그인 했는데 자신일경우 그냥 자기 프로필페이지로 , 아닌경우엔 팔로우
     }
 
 }

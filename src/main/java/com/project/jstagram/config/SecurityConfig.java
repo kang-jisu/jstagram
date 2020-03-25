@@ -39,6 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //.andMatchers는 특정 경로 지정
                 .antMatchers("/user/admin/**").hasRole("ADMIN")
                 .antMatchers("/user/info").hasAnyRole("ADMIN","MEMBER")
+                .antMatchers("/user/follow/**").hasAnyRole("ADMIN","MEMBER")
                 .antMatchers("/insert").hasAnyRole("ADMIN","MEMBER")
                 .antMatchers("/update").hasAnyRole("ADMIN","MEMBER")
                 .antMatchers("/**").permitAll()

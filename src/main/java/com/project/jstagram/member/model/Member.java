@@ -7,6 +7,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Entity
@@ -57,11 +58,20 @@ public class Member {
     @JoinColumn(name="author")
     private List<Comments> comments;
 
+
+    @OneToMany(fetch=FetchType.LAZY,cascade = CascadeType.ALL)
+    @JoinColumn(name="followingId")
+    private Set<Follow> followings;
+
+    @OneToMany(fetch=FetchType.LAZY,cascade = CascadeType.ALL)
+    @JoinColumn(name="followerId")
+    private Set<Follow> followers;
+
     public Member(){
 
     }
     @Builder
-    public Member(String email, String password, String nickname, String name, String text, String phone, String birth, LocalDateTime createdDate, LocalDateTime modifiedDate, String verify, List<Post> post, List<Comments> comments) {
+    public Member(String email, String password, String nickname, String name, String text, String phone, String birth, LocalDateTime createdDate, LocalDateTime modifiedDate, String verify, List<Post> post, List<Comments> comments,Set<Follow> followers, Set<Follow> followings) {
         this.email = email;
         this.password = password;
         this.nickname = nickname;
@@ -74,5 +84,7 @@ public class Member {
         this.verify = verify;
         this.post = post;
         this.comments = comments;
+        this.followers = followers;
+        this.followings = followings;
     }
 }

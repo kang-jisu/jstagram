@@ -22,7 +22,12 @@
         <h5><span th:text="${user.name}"></span></h5>
         <h5><span th:text="${user.text}"></span></h5>
 
-        <h6>게시물 수 : <span th:text="${postList.size()}"></span>  팔로우 : 팔로워 : </h6>
+        <h6>게시물 수 : <span th:text="${postList.size()}"></span>  팔로워 :<span th:text="${followers}"></span> 팔로잉:<span th:text="${followings}"></span> </h6>
+
+        <a  sec:authorize="isAuthenticated()" th:if="${!loginId.toString().equals(user.id.toString())}" class="btn btn-primary m-2" th:href="'/user/follow/'+${user.id}" >팔로우하기</a>
+        <a  sec:authorize="isAnonymous()"  class="btn btn-primary m-2" th:href="'/user/follow/'+${user.id}+'/login'" >팔로우하기</a>
+
+
         <hr/>
         <div class="row justify-content-center">
 
