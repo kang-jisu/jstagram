@@ -2,10 +2,10 @@ package com.project.jstagram.post.service;
 
 
 import com.project.jstagram.member.model.Member;
+import com.project.jstagram.member.repository.MemberRepository;
 import com.project.jstagram.post.model.Comments;
 import com.project.jstagram.post.model.Post;
 import com.project.jstagram.post.repository.PostRepository;
-import com.project.jstagram.member.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -50,6 +50,10 @@ public class PostService {
         return postRepository.findAll();
     }
 
+
+    public List<Post> findAllPostByAuthor(Long id){
+        return postRepository.findByAuthor(id);
+    }
 
     @Transactional
     public void deleteOne(Long id){

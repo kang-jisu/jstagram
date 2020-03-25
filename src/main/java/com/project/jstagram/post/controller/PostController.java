@@ -125,4 +125,25 @@ public class PostController {
         return "redirect:/";
     }
 
+
+    // 프로필 페이지
+    @GetMapping("/{memberId}")
+    public String profilePage(@PathVariable(value="memberId")String memberId, Model model, Principal principal){
+
+        Optional<Member> m = memberService.findByMemberId(memberId);
+        if(!m.isPresent()){
+            return "redirect:/user/denied/notfound"; // 임시 에러처리
+        }
+        else {
+            List<Post> post = postService.findAllPostByAuthor(m.get().getId());
+            model.addAttribute("postList", post); //글 목록
+            model.addAttribute("user",m.get());
+            if (principal != null) {
+                Optional<Member> loginMember = memberService.findByEmail(principal.getName());
+                model.addAttribute("loginId", loginMember.get().getId()); // 현재 로그인한 유저가 프로필사이트 유저면 프로필편집
+            }
+
+            return "profile";
+        }
+    }
 }

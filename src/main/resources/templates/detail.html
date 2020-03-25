@@ -26,18 +26,22 @@
                     <div class="col-md-4" style="position: relative;">
                         <div class="card-header bg-white ">
                             <a class="text-body font-weight-bold text-monospace " style="height: 70px;"
-                               th:href="'/detail/'+${post.id}"
+                               th:href="'/'+${mapList.get(post.author)}"
                                th:text="${mapList.get(post.author)}"></a>
                         </div>
 
                         <div class="card-body border border-bottom border-gray overflow-auto" style="height: 420px;">
+                            <a  th:href="'/'+${mapList.get(post.author)}" >
                             <span style="font-size:90%" class="card-title font-weight-bold"
                                   th:text="${mapList.get(post.author)}"></span>
+                            </a>
                             <span style="font-size:80%" class="card-text" th:text="${post.content}"></span><br/>
 
                             <p class="mb-0" th:each="comment : ${comments.get(post.id)}">
-                        <span style="font-size:85%" class="card-title font-weight-bold"
-                              th:text="${mapList.get(comment.author)}"></span>
+                                <a  th:href="'/'+${mapList.get(comment.author)}" >
+                                    <span style="font-size:85%" class="card-title font-weight-bold"
+                                          th:text="${mapList.get(comment.author)}"></span>
+                                </a>
                                 <span style="font-size:75%" class="card-text" th:text="${comment.comment}"></span>
                                 <button type="button" class="close " aria-label="Close" sec:authorize="isAuthenticated()" th:if="${comment.author.toString().equals(user.id.toString())}">
                                     <a th:href="'/comments/detail/'+${post.id}+'/delete/'+${comment.id}"

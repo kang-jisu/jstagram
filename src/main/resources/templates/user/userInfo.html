@@ -16,6 +16,7 @@
     <div class="container">
     <h3>My info</h3>
         이메일 : <span th:text="${user.email}"></span> <br/>
+        이름 : <span th:text="${user.name}"></span><br/>
         아이디 : <span th:text="${user.memberId}"></span><br/>
         생년월일 : <span th:text="${user.birth}"></span><br/>
         핸드폰 : <span th:text="${user.phone}"></span><br/>
@@ -24,6 +25,7 @@
 
     <a sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a> <br/>
         <a sec:authorize="isAuthenticated()" th:href="@{/user/withdraw}">회원 탈퇴</a>
+        <a sec:authorize="isAuthenticated()" th:href="@{/user/update}">회원 정보 수정</a>
     </div>
 </div>
 </body>

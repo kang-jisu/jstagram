@@ -7,7 +7,10 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Optional;
 
@@ -28,6 +31,19 @@ public class MemberController {
     public String DeniedMsgPage(@PathVariable("errormsg") String msg, Model model) {
         model.addAttribute("msg", msg);
         return "user/userDenied";
+    }
+
+    @GetMapping("/profile")
+    public String profilePage(@AuthenticationPrincipal User user){
+        if(user==null) return "user/login";
+        else {
+            Optional<Member> m = memberService.findByEmail(user.getUsername());
+            if (!m.isPresent()) {
+                return "redirect:/user/denied/notfound"; // 임시 에러처리
+            } else {
+                return "redirect:" + "/" + m.get().getMemberId();
+            }
+        }
     }
 
     // 내 정보 페이지
@@ -91,6 +107,21 @@ public class MemberController {
             else {
                 return "redirect:/user/denied/withdrawerror";
             }
+    }
+
+
+    // 회원 가입 페이지
+    @GetMapping("/update")
+    public String updatePage(Model model, @AuthenticationPrincipal User user) {
+        Optional<Member> m = memberService.findByEmail(user.getUsername());
+        model.addAttribute("user", m.get());
+        return "user/update";
+    }
+
+    @PostMapping("/update")
+    public String updateUserInfo(Member member){
+        memberService.updateUserInfo(member);
+        return "redirect:/user/info";
     }
 
 }

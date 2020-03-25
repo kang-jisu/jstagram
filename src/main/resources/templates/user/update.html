@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Jstagram</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    <link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+
+</head>
+<body class="bg-light">
+
+<nav th:replace="layout/header::header"></nav>
+<div class="mt-5 pt-5 ">
+    회원 정보 수정
+    <form th:action="@{/user/update}" method="post">
+        <input type="hidden" name="id" th:value="${user.id}">
+        이메일: <input type="text" name="email" placeholder="이메일 입력해주세요" th:value="${user.email}" readonly><br/>
+        비밀번호: <input type="password" name="password" placeholder="비밀번호변경은 나중에" readonly ><br/>
+        이름: <input type="text" name="name" placeholder="이름" th:value="${user.name}"><br/>
+        아이디: <input type="text" name="memberId" placeholder="닉네임" th:value="${user.memberId}"><br/>
+        생년월일: <input type="text" name="birth" placeholder="19000000" th:value="${user.birth}"><br/>
+        핸드폰: <input type="text" name="phone" placeholder="01012341234" th:value="${user.phone}"><br/>
+        소개: <input type="text" name="text" placeholder="소개" th:value="${user.text}"><br/>
+        <button type="submit">수정하기</button>
+    </form>
+</div>
+</body>
+</html>
+

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<!--<meta http-equiv="refresh" content="3; url=/" />-->
+<head>
+    <meta charset="UTF-8">
+    <title>Jstagram</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    <link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
+
+</head>
+<body class="bg-light">
+
+<nav th:replace="layout/header::header"></nav>
+<div class="mt-5 pt-5 "> <!-- 본문-->
+    <div class="container">
+
+        <h3 th:text="${user.memberId}"></h3>
+        <a   sec:authorize="isAuthenticated()" th:if="${loginId.toString().equals(user.id.toString())}" th:href="@{/user/info}" >내 정보 보기</a>
+
+        <h5><span th:text="${user.name}"></span></h5>
+        <h5><span th:text="${user.text}"></span></h5>
+
+        <h6>게시물 수 : <span th:text="${postList.size()}"></span>  팔로우 : 팔로워 : </h6>
+        <hr/>
+        <div class="row justify-content-center">
+
+            <!-- postList 하나씩 보여줌 -->
+            <div class="card mb-5 " style="width: 300px;" th:each="post : ${postList}">
+                <!-- 이미지-->
+                <a  th:href="'/detail/'+${post.id}" >
+                    <img th:src="${post.image}" class="card-img-top" alt="...">
+                </a>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+</div>
+
+</body>
+</html>

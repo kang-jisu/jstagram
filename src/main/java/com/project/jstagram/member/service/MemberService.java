@@ -27,6 +27,11 @@ public class MemberService implements UserDetailsService {
     @Autowired
     private MemberRepository memberRepository;
 
+
+    public Optional<Member> findByMemberId(String memberId){
+        return memberRepository.findByMemberId(memberId);
+    }
+
     // spring security 로그인 method
     @Override //상세정보 조회 메서드. 사용자의 계정정보와 권한을 갖는 userDetail반환
     public UserDetails loadUserByUsername(String useremail) throws UsernameNotFoundException {
@@ -72,5 +77,15 @@ public class MemberService implements UserDetailsService {
     /// user
     public List<Member> findAllMember() {
         return memberRepository.findAll();
+    }
+
+    public void updateUserInfo(Member member){
+        Member oldMember = memberRepository.getOne(member.getId());
+        oldMember.setMemberId(member.getMemberId());
+        oldMember.setName(member.getName());
+        oldMember.setText(member.getText());
+        oldMember.setBirth(member.getBirth());
+        oldMember.setModifiedDate(LocalDateTime.now());
+        memberRepository.save(oldMember);
     }
 }
