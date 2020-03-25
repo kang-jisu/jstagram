@@ -30,6 +30,9 @@ public class Member {
     private String memberId; // 계정 아이디
 
     @Column
+    private String name; // 이름
+
+    @Column
     private String text; // 프로필 소개
 
     @Column
@@ -58,10 +61,11 @@ public class Member {
 
     }
     @Builder
-    public Member(String email, String password, String memberId, String text, String phone, String birth, LocalDateTime createdDate, LocalDateTime modifiedDate, String verify, List<Post> post, List<Comments> comments) {
+    public Member(String email, String password, String memberId, String name, String text, String phone, String birth, LocalDateTime createdDate, LocalDateTime modifiedDate, String verify, List<Post> post, List<Comments> comments) {
         this.email = email;
         this.password = password;
         this.memberId = memberId;
+        this.name = name;
         this.text = text;
         this.phone = phone;
         this.birth = birth;
