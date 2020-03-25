@@ -41,14 +41,14 @@ public class PostController {
         Map<Long, String> map = new HashMap<>();
         Map<Long, List<Comments>> Cmap = new HashMap<>();
         for (Member m : member) {
-            map.put(m.getId(), m.getMemberId());
+            map.put(m.getId(), m.getNickname());
         }
         for (Post p : post) {
             Cmap.put(p.getId(), postService.findComments(p.getId()));
         }
         model.addAttribute("comments", Cmap); //글마다의 댓글목록
         model.addAttribute("postList", post); //글 목록
-        model.addAttribute("mapList", map); //post,comments의 author(=member_id) 로 memberId 닉네임검색용
+        model.addAttribute("mapList", map); //post,comments의 author(=member_id) 로 닉네임검색용
 
         if (principal != null) {
             Optional<Member> m = memberService.findByEmail(principal.getName());
@@ -91,7 +91,7 @@ public class PostController {
         List<Member> member = memberService.findAllMember();
         Map<Long, String> map = new HashMap<>();
         for (Member m : member) {
-            map.put(m.getId(), m.getMemberId());
+            map.put(m.getId(), m.getNickname());
         }
         model.addAttribute("mapList", map); //댓글, 글 author->user닉네임검색용
 
@@ -127,10 +127,10 @@ public class PostController {
 
 
     // 프로필 페이지
-    @GetMapping("/{memberId}")
-    public String profilePage(@PathVariable(value="memberId")String memberId, Model model, Principal principal){
+    @GetMapping("/{nickname}")
+    public String profilePage(@PathVariable(value="nickname")String nickname, Model model, Principal principal){
 
-        Optional<Member> m = memberService.findByMemberId(memberId);
+        Optional<Member> m = memberService.findByNickname(nickname);
         if(!m.isPresent()){
             return "redirect:/user/denied/notfound"; // 임시 에러처리
         }

@@ -41,7 +41,7 @@ public class MemberController {
             if (!m.isPresent()) {
                 return "redirect:/user/denied/notfound"; // 임시 에러처리
             } else {
-                return "redirect:" + "/" + m.get().getMemberId();
+                return "redirect:" + "/" + m.get().getNickname();
             }
         }
     }

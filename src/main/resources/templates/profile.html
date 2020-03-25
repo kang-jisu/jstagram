@@ -16,7 +16,7 @@
 <div class="mt-5 pt-5 "> <!-- 본문-->
     <div class="container">
 
-        <h3 th:text="${user.memberId}"></h3>
+        <h3 th:text="${user.nickname}"></h3>
         <a   sec:authorize="isAuthenticated()" th:if="${loginId.toString().equals(user.id.toString())}" th:href="@{/user/info}" >내 정보 보기</a>
 
         <h5><span th:text="${user.name}"></span></h5>

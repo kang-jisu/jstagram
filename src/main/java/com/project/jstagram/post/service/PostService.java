@@ -38,7 +38,7 @@ public class PostService {
 
     public String findAuthorByid(Long id){
         Member member= memberRepository.getOne(id);
-        return member.getMemberId();
+        return member.getNickname();
     }
 
     public List<Comments> findComments(Long id){

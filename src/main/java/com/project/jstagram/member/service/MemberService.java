@@ -28,8 +28,8 @@ public class MemberService implements UserDetailsService {
     private MemberRepository memberRepository;
 
 
-    public Optional<Member> findByMemberId(String memberId){
-        return memberRepository.findByMemberId(memberId);
+    public Optional<Member> findByNickname(String nickname){
+        return memberRepository.findByNickname(nickname);
     }
 
     // spring security 로그인 method
@@ -81,7 +81,7 @@ public class MemberService implements UserDetailsService {
 
     public void updateUserInfo(Member member){
         Member oldMember = memberRepository.getOne(member.getId());
-        oldMember.setMemberId(member.getMemberId());
+        oldMember.setNickname(member.getNickname());
         oldMember.setName(member.getName());
         oldMember.setText(member.getText());
         oldMember.setBirth(member.getBirth());
