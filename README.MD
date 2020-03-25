@@ -3,9 +3,11 @@
 사용 툴 : spring boot, thymeleaf, aws s3, spring security ,bootstrap , mysql 
 react.js 랑 api로 back,front 나눈건 없애고 backend로만 다시 구현함
 
-![main](./image/jstagram_main.png){: width="300" height="250" }
-![detail](./image/jstagram_detail.png){: width="300" height="250}
+구현 기능 : 게시글 작성, 댓글 추가, 회원가입, 로그인, 프로필, 팔로우 
 
+![main](./image/jstagram_main.png)  
+![detail](./image/jstagram_detail.png)  
+![profile](./image/jstagram_profile.png)  
 
 <Jstagram>
  - 2019.10.20
